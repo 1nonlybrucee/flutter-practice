@@ -1,5 +1,7 @@
-# Ignore C++ and platform build files across ALL subprojects
-**/windows/** linguist-vendored
+# Ignore auto-generated platform runner folders
+**/android/** linguist-vendored
+**/ios/** linguist-vendored
 **/linux/** linguist-vendored
 **/macos/** linguist-vendored
-**/*.cmake linguist-vendored
+**/web/** linguist-vendored
+**/windows/** linguist-vendored
