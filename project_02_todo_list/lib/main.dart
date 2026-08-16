@@ -62,6 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                if (nameController.text.trim().isEmpty) {
+                  return;
+                }
                 setState(() {
                   tasks.add(
                     Task(
@@ -71,34 +74,60 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   );
                 });
-                nameController.text = "";
+                nameController.clear();
               },
               child: Text("Submit"),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      leading: Checkbox(
-                        value: tasks[index].completed,
-                        onChanged: (value) {
-                          setState(() {
-                            tasks[index].completed = value!;
-                          });
-                        },
-                      ),
-                      title: Text(tasks[index].title),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.delete),
-                      ),
-                    ),
-                  );
-                },
+
+            if (tasks.isNotEmpty)
+              Text(
+                "${tasks.where((task) => task.completed).length} / ${tasks.length} tasks completed",
               ),
-            ),
+
+            if (tasks.isEmpty)
+              const Expanded(
+                child: Center(
+                  child: Text("No tasks yet", style: TextStyle(fontSize: 10)),
+                ),
+              )
+            else
+              Expanded(
+                child: ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    final task = tasks[index];
+                    return Card(
+                      child: ListTile(
+                        leading: Checkbox(
+                          value: task.completed,
+                          onChanged: (value) {
+                            setState(() {
+                              task.completed = value!;
+                            });
+                          },
+                        ),
+                        title: Text(
+                          task.title,
+                          style: TextStyle(
+                            decoration: task.completed
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            color: task.completed ? Colors.grey : Colors.black,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              tasks.removeAt(index);
+                            });
+                          },
+                          icon: Icon(Icons.delete),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
           ],
         ),
       ),
