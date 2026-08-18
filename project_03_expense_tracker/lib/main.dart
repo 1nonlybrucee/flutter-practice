@@ -4,11 +4,16 @@ void main() {
   runApp(MyApp());
 }
 
+// ====================
+// MODELS
+// ====================
+
 class Expense {
   String id;
   Category category;
   String name;
   double amount;
+
   Expense(this.id, this.category, this.name, this.amount);
 }
 
@@ -19,8 +24,28 @@ class Category {
   Category(this.id, this.name);
 }
 
+// ====================
+// APP
+// ====================
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ExpenseHomePage(),
+    );
+  }
+}
+
+// ====================
+// HOME PAGE
+// ====================
+
+class ExpenseHomePage extends StatelessWidget {
+  const ExpenseHomePage({super.key});
 
   double getCategoryTotal(Category category, List<Expense> expenses) {
     return expenses
@@ -30,15 +55,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Categories
     Category category1 = Category("1", "Food");
     Category category2 = Category("2", "Transport");
     Category category3 = Category("3", "School");
 
     List<Category> categories = [category1, category2, category3];
 
+    // Mock expenses
     Expense mockExpense1 = Expense("1", category1, "Lunch", 60.52);
+
     Expense mockExpense2 = Expense("2", category2, "Fare", 120.334);
+
     Expense mockExpense3 = Expense("3", category3, "Project", 130);
+
     Expense mockExpense4 = Expense("4", category1, "Snack", 45);
 
     List<Expense> expenses = [
@@ -47,6 +77,8 @@ class MyApp extends StatelessWidget {
       mockExpense3,
       mockExpense4,
     ];
+
+    // Total spent
     double totalSpent = expenses.fold(
       0,
       (sum, expense) => sum + expense.amount,
@@ -54,67 +86,97 @@ class MyApp extends StatelessWidget {
 
     String formattedPrice = totalSpent.toStringAsFixed(2);
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: Text("Expense Tracker")),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              ListTile(
-                title: Text("Total Spent:"),
-                trailing: Text("₱$formattedPrice"),
-              ),
+    return Scaffold(
+      appBar: AppBar(title: Text("Expense Tracker")),
 
-              SizedBox(
-                height: 100,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            // Total spent
+            ListTile(
+              title: Text("Total Spent:"),
+              trailing: Text("₱$formattedPrice"),
+            ),
 
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: 115,
-                      child: Card(
-                        child: ListTile(
-                          title: Text(categories[index].name),
-                          subtitle: Text(
-                            "₱${getCategoryTotal(categories[index], expenses).toStringAsFixed(2)}",
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Text("Recent Expenses"),
-
-              Expanded(
-                child: ListView.builder(
-                  itemCount: expenses.length,
-                  itemBuilder: (context, index) {
-                    return Card(
+            // Categories
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    width: 115,
+                    child: Card(
                       child: ListTile(
-                        title: Text(expenses[index].name),
-                        subtitle: Text(expenses[index].category.name),
-                        trailing: Text(
-                          "₱${expenses[index].amount.toStringAsFixed(2)}",
+                        title: Text(categories[index].name),
+                        subtitle: Text(
+                          "₱${getCategoryTotal(categories[index], expenses).toStringAsFixed(2)}",
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+
+            SizedBox(height: 10),
+
+            Text("Recent Expenses"),
+
+            SizedBox(height: 10),
+
+            // Expenses
+            Expanded(
+              child: ListView.builder(
+                itemCount: expenses.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(expenses[index].name),
+                      subtitle: Text(expenses[index].category.name),
+                      trailing: Text(
+                        "₱${expenses[index].amount.toStringAsFixed(2)}",
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Text("+"),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
+
+      // Add expense button
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddExpensePage()),
+          );
+        },
+        child: Text("+"),
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+}
+
+// ====================
+// ADD EXPENSE PAGE
+// ====================
+
+class AddExpensePage extends StatelessWidget {
+  const AddExpensePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Add Expense")),
+
+      body: Center(child: Text("Add expense here")),
     );
   }
 }
