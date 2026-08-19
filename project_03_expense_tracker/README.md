@@ -1,3 +1,4 @@
+(Status: Archived / Development moved to v2)
 # Expense Tracker
 
 A simple Flutter expense tracker app for learning Flutter development.
