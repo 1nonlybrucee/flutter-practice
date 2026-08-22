@@ -17,7 +17,10 @@ class Navigation extends StatelessWidget {
       onTap: onTap,
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.receipt), label: "Expenses"),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.receipt_long),
+          label: "Expenses",
+        ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bar_chart),
           label: "Statistics",
