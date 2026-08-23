@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_04_expense_tracker_v2/models/expense.dart';
-import 'package:project_04_expense_tracker_v2/services/expense_service.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/expense.dart';
 import '../models/category.dart';
 
 class AddExpenseDialog extends StatefulWidget {
@@ -17,7 +16,6 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
   final nameController = TextEditingController();
   final amountController = TextEditingController();
   final uuid = Uuid();
-  final expenseService = ExpenseService();
 
   @override
   void dispose() {
@@ -68,16 +66,18 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
         ),
         ElevatedButton(
           onPressed: () {
-            expenseService.addExpense(
-              Expense(
-                id: uuid.v4(),
-                title: nameController.text,
-                amount: double.parse(amountController.text),
-                date: DateTime.now(),
-                category: selectedCategory,
-              ),
+            if (nameController.text.trim().isEmpty ||
+                amountController.text.trim().isEmpty) {
+              return;
+            }
+            final expense = Expense(
+              id: uuid.v4(),
+              title: nameController.text,
+              amount: double.parse(amountController.text),
+              date: DateTime.now(),
+              category: selectedCategory,
             );
-            Navigator.pop(context);
+            Navigator.pop(context, expense);
           },
           child: Text("Add"),
         ),
