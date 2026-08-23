@@ -27,7 +27,7 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Add Expenses"),
+      title: Text("Gastos pa!"),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -47,7 +47,10 @@ class _AddExpenseDialogState extends State<AddExpenseDialog> {
             },
           ),
           TextField(
-            decoration: InputDecoration(labelText: "Expense name"),
+            decoration: InputDecoration(
+              labelText: "Gastos Description",
+              hintText: 'jollibee',
+            ),
             controller: nameController,
           ),
           TextField(

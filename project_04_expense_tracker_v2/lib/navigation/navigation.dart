@@ -21,10 +21,10 @@ class Navigation extends StatelessWidget {
           icon: Icon(Icons.receipt_long),
           label: "Expenses",
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart),
-          label: "Statistics",
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.bar_chart),
+        //   label: "Statistics",
+        // ),
       ],
     );
   }

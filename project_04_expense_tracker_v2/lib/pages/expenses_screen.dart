@@ -6,7 +6,8 @@ import '../services/expense_service.dart';
 import '../models/expense.dart';
 
 class ExpensesScreen extends StatefulWidget {
-  const ExpensesScreen({super.key});
+  final expenseService;
+  const ExpensesScreen({required this.expenseService, super.key});
 
   @override
   State<ExpensesScreen> createState() => _ExpensesScreenState();

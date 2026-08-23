@@ -1,3 +1,5 @@
+(Status: Archived / Development moved to v3)
+
 # Expense Tracker V2
 
 A mobile expense tracker application built with Flutter and Dart. This is the second version of my original Expense Tracker project, rebuilt from scratch to apply the Flutter concepts and development practices I have learned.
