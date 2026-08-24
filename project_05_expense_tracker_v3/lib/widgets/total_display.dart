@@ -8,6 +8,6 @@ class TotalDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final total = ref.watch(totalExpenseProvider);
-    return Text('Total \$${total.toStringAsFixed(2)}');
+    return Text('Total: ₱${total.toStringAsFixed(2)}');
   }
 }
