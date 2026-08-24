@@ -7,18 +7,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Gastos Tracker")),
-      body: Column(
-        children: [
-          TotalDisplay(),
-          Expanded(child: ExpenseList()),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Text("+"),
-      ),
+    return Column(
+      children: [
+        TotalDisplay(),
+        Expanded(child: ExpenseList()),
+      ],
     );
   }
 }
