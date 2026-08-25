@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_05_expense_tracker_v3/screens/expenses_screen.dart';
 import 'package:project_05_expense_tracker_v3/screens/home_screen.dart';
 import 'package:project_05_expense_tracker_v3/widgets/bottom_navigation.dart';
 
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [HomeScreen()];
+  final List<Widget> _screens = const [HomeScreen(), ExpensesScreen()];
 
   void _onNavItemTapped(int index) {
     setState(() {
@@ -32,9 +33,10 @@ class _HomePageState extends State<HomePage> {
         onTap: _onNavItemTapped,
       ),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {},
-        child: Text("+"),
+        icon: Icon(Icons.add),
+        label: Text("Add Expense"),
       ),
     );
   }
