@@ -8,7 +8,7 @@ class ExpenseList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Expense> expenses = ref.watch(expenseProvider);
+    final List<Expense> expenses = ref.watch(expenseProvider).reversed.toList();
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder: (context, index) {
