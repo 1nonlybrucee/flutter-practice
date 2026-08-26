@@ -21,6 +21,13 @@ class _AddExpenseDialog extends ConsumerState<AddExpenseDialog> {
   var uuid = const Uuid();
 
   @override
+  void dispose() {
+    nameController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text("Gastos Pa!!"),
@@ -66,6 +73,10 @@ class _AddExpenseDialog extends ConsumerState<AddExpenseDialog> {
                 amountController.text.trim().isEmpty) {
               return;
             }
+            final amount = double.tryParse(amountController.text);
+            if (amount == null) {
+              return;
+            }
 
             ref
                 .read(expenseProvider.notifier)
@@ -73,7 +84,7 @@ class _AddExpenseDialog extends ConsumerState<AddExpenseDialog> {
                   Expense(
                     id: uuid.v4(),
                     name: nameController.text,
-                    amount: double.parse(amountController.text),
+                    amount: amount,
                     date: DateTime.now(),
                     category: selectedCategory,
                   ),
