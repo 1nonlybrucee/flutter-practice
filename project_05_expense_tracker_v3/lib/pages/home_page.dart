@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_05_expense_tracker_v3/screens/expenses_screen.dart';
 import 'package:project_05_expense_tracker_v3/screens/home_screen.dart';
+import 'package:project_05_expense_tracker_v3/widgets/add_expense_dialog.dart';
 import 'package:project_05_expense_tracker_v3/widgets/bottom_navigation.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,7 +35,12 @@ class _HomePageState extends State<HomePage> {
       ),
 
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AddExpenseDialog(),
+          );
+        },
         icon: Icon(Icons.add),
         label: Text("Add Expense"),
       ),
