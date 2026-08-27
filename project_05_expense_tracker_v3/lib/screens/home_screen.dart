@@ -10,9 +10,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TotalDisplay(),
-        TopCategories(),
-        Expanded(child: ExpenseList()),
+        const TotalDisplay(),
+        const TopCategories(),
+        const Expanded(child: ExpenseList()),
       ],
     );
   }
