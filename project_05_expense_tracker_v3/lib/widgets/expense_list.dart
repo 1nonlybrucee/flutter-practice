@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_05_expense_tracker_v3/models/expense.dart';
 import 'package:project_05_expense_tracker_v3/providers/expense_provider.dart';
+import 'package:project_05_expense_tracker_v3/widgets/edit_expense_dialog.dart';
 
 class ExpenseList extends ConsumerWidget {
   const ExpenseList({super.key, this.selectedCategory, this.showEdit = false});
@@ -29,7 +30,9 @@ class ExpenseList extends ConsumerWidget {
         final expense = filteredExpenses[index];
 
         return ListTile(
-          title: Text(expense.name),
+          title: showEdit
+              ? Text('${expense.name} - ${expense.category.name}')
+              : Text(expense.name),
           subtitle: showEdit
               ? Text("₱${expense.amount.toStringAsFixed(2)}")
               : Text(expense.category.name),
@@ -39,11 +42,24 @@ class ExpenseList extends ConsumerWidget {
                     const PopupMenuItem(value: 'edit', child: Text("Edit")),
                     const PopupMenuItem(value: 'delete', child: Text("Delete")),
                   ],
-                  onSelected: (value) {
+                  onSelected: (value) async {
                     if (value == "delete") {
                       ref
                           .read(expenseProvider.notifier)
                           .deleteExpense(expense.id);
+                    }
+                    if (value == 'edit') {
+                      final updatedExpense = await showDialog<Expense>(
+                        context: context,
+                        builder: (context) {
+                          return EditExpenseDialog(expense: expense);
+                        },
+                      );
+                      if (updatedExpense != null) {
+                        ref
+                            .read(expenseProvider.notifier)
+                            .updateExpense(updatedExpense);
+                      }
                     }
                   },
                 )
