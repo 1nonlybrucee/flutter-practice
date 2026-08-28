@@ -26,7 +26,12 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             });
           },
         ),
-        Expanded(child: ExpenseList(selectedCategory: selectedCategory)),
+        Expanded(
+          child: ExpenseList(
+            selectedCategory: selectedCategory,
+            showEdit: true,
+          ),
+        ),
       ],
     );
   }

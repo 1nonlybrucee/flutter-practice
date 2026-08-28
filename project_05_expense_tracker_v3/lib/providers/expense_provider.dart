@@ -16,6 +16,13 @@ class ExpenseNotifier extends Notifier<List<Expense>> {
   void deleteExpense(String idToRemove) {
     state = state.where((expense) => expense.id != idToRemove).toList();
   }
+
+  void updateExpense(Expense updatedExpense) {
+    state = [
+      for (final expense in state)
+        if (expense.id == updatedExpense.id) updatedExpense else expense,
+    ];
+  }
 }
 
 final expenseProvider = NotifierProvider<ExpenseNotifier, List<Expense>>(
