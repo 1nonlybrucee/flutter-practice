@@ -4,31 +4,9 @@ import '../models/expense.dart';
 class ExpenseNotifier extends Notifier<List<Expense>> {
   static const String hardcodedString = "2026-06-05T14:30:00";
 
-  Expense expense1 = Expense(
-    id: '123',
-    name: "jollibee",
-    amount: 125.44,
-    date: DateTime.parse(hardcodedString),
-    category: Category.kakanon,
-  );
-  Expense expense2 = Expense(
-    id: '123',
-    name: "commute psu",
-    amount: 100,
-    date: DateTime.parse(hardcodedString),
-    category: Category.pamasahe,
-  );
-  Expense expense3 = Expense(
-    id: '123',
-    name: "parcel pahamot",
-    amount: 530,
-    date: DateTime.parse(hardcodedString),
-    category: Category.shopee,
-  );
-
   @override
   List<Expense> build() {
-    return [expense1, expense2, expense3];
+    return [];
   }
 
   void addExpense(Expense expense) {
@@ -54,7 +32,9 @@ final topThreeCategoriesProvider = Provider<List<MapEntry<Category, double>>>((
 ) {
   final expenses = ref.watch(expenseProvider);
 
-  final categoryTotals = <Category, double>{};
+  final categoryTotals = <Category, double>{
+    for (var category in Category.values) category: 0.0,
+  };
 
   for (final expense in expenses) {
     categoryTotals[expense.category] =
