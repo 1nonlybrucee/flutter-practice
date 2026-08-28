@@ -23,7 +23,7 @@ class ExpenseList extends ConsumerWidget {
     }
 
     return ListView.builder(
-      itemCount: expenses.length,
+      itemCount: filteredExpenses.length,
       itemBuilder: (context, index) {
         final expense = filteredExpenses[index];
 
