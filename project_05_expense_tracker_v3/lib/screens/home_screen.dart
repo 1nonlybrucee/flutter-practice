@@ -8,12 +8,24 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const TotalDisplay(),
-        const TopCategories(),
-        const Expanded(child: ExpenseList()),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Home',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const TotalDisplay(),
+          const SizedBox(height: 24),
+          const TopCategories(),
+          const SizedBox(height: 24),
+          const Expanded(child: ExpenseList()),
+        ],
+      ),
     );
   }
 }

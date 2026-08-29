@@ -14,8 +14,22 @@ class TopCategories extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: topCategories.map((entry) {
           return Card(
-            child: Column(
-              children: [Text(entry.key.name), Text('₱${entry.value}')],
+            child: Container(
+              width: 110,
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Text(
+                    entry.key.name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text('₱${entry.value}'),
+                ],
+              ),
             ),
           );
         }).toList(),

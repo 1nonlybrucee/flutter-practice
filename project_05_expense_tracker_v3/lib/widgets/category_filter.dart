@@ -13,15 +13,30 @@ class CategoryFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<Category>(
-      value: selectedCategory,
-      items: [
-        const DropdownMenuItem(value: null, child: Text("All Categories")),
-        ...Category.values.map((category) {
-          return DropdownMenuItem(value: category, child: Text(category.name));
-        }),
-      ],
-      onChanged: onChanged,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          width: 1.5,
+        ),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<Category>(
+          value: selectedCategory,
+          items: [
+            const DropdownMenuItem(value: null, child: Text("Gabos na gastos")),
+            ...Category.values.map((category) {
+              return DropdownMenuItem(
+                value: category,
+                child: Text(category.name),
+              );
+            }),
+          ],
+          onChanged: onChanged,
+        ),
+      ),
     );
   }
 }

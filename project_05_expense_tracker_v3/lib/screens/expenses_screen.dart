@@ -15,24 +15,36 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 210, child: CategoryCards()),
-        CategoryFilter(
-          selectedCategory: selectedCategory,
-          onChanged: (value) {
-            setState(() {
-              selectedCategory = value;
-            });
-          },
-        ),
-        Expanded(
-          child: ExpenseList(
-            selectedCategory: selectedCategory,
-            showEdit: true,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Expenses",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-      ],
+          const SizedBox(height: 10),
+          SizedBox(height: 180, child: CategoryCards()),
+          const SizedBox(height: 24),
+          CategoryFilter(
+            selectedCategory: selectedCategory,
+            onChanged: (value) {
+              setState(() {
+                selectedCategory = value;
+              });
+            },
+          ),
+          Expanded(
+            child: ExpenseList(
+              selectedCategory: selectedCategory,
+              showEdit: true,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
