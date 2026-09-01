@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:project_05_expense_tracker_v3/widgets/expense_list.dart';
+import 'package:project_05_expense_tracker_v3/widgets/expense_period_filter.dart';
 import 'package:project_05_expense_tracker_v3/widgets/top_categories.dart';
 import 'package:project_05_expense_tracker_v3/widgets/total_display.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  ExpensePeriod selectedPeriod = ExpensePeriod.today;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +29,18 @@ class HomeScreen extends StatelessWidget {
           ),
           const TotalDisplay(),
           const SizedBox(height: 24),
+          ExpensePeriodFilter(
+            selectedPeriod: selectedPeriod,
+            onChanged: (period) {
+              setState(() {
+                selectedPeriod = period;
+              });
+            },
+          ),
+          const SizedBox(height: 16),
           const TopCategories(),
           const SizedBox(height: 24),
-          const Expanded(child: ExpenseList()),
+          Expanded(child: ExpenseList(selectedPeriod: selectedPeriod)),
         ],
       ),
     );

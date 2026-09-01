@@ -14,16 +14,37 @@ class ExpensePeriodFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<ExpensePeriod>(
-      value: selectedPeriod,
-      items: ExpensePeriod.values.map((period) {
-        return DropdownMenuItem(value: period, child: Text(period.name));
-      }).toList(),
-      onChanged: (value) {
-        if (value != null) {
-          onChanged(value);
-        }
-      },
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          width: 1.5,
+        ),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<ExpensePeriod>(
+          value: selectedPeriod,
+          items: ExpensePeriod.values.map((period) {
+            return DropdownMenuItem(
+              value: period,
+              child: Text(switch (period) {
+                ExpensePeriod.today => 'Today',
+                ExpensePeriod.thisWeek => 'This Week',
+                ExpensePeriod.thisMonth => 'This Month',
+                ExpensePeriod.thisYear => 'This Year',
+                ExpensePeriod.allTime => 'All Time',
+              }),
+            );
+          }).toList(),
+          onChanged: (value) {
+            if (value != null) {
+              onChanged(value);
+            }
+          },
+        ),
+      ),
     );
   }
 }

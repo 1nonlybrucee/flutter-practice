@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_05_expense_tracker_v3/widgets/category_cards.dart';
 import 'package:project_05_expense_tracker_v3/widgets/category_filter.dart';
 import 'package:project_05_expense_tracker_v3/widgets/expense_list.dart';
+import 'package:project_05_expense_tracker_v3/widgets/expense_period_filter.dart';
 import '../models/expense.dart';
 
 class ExpensesScreen extends StatefulWidget {
@@ -12,6 +13,7 @@ class ExpensesScreen extends StatefulWidget {
 
 class _ExpensesScreenState extends State<ExpensesScreen> {
   Category? selectedCategory;
+  ExpensePeriod selectedPeriod = ExpensePeriod.today;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,14 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
             ),
           ),
           const SizedBox(height: 10),
+          ExpensePeriodFilter(
+            selectedPeriod: selectedPeriod,
+            onChanged: (period) {
+              setState(() {
+                selectedPeriod = period;
+              });
+            },
+          ),
           SizedBox(height: 180, child: CategoryCards()),
           const SizedBox(height: 24),
           CategoryFilter(
@@ -40,6 +50,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
           Expanded(
             child: ExpenseList(
               selectedCategory: selectedCategory,
+              selectedPeriod: selectedPeriod,
               showEdit: true,
             ),
           ),
