@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_05_expense_tracker_v3/models/expense_period.dart';
 import '../models/expense.dart';
 
 import 'dart:convert';
@@ -58,28 +59,71 @@ final expenseProvider = NotifierProvider<ExpenseNotifier, List<Expense>>(
   ExpenseNotifier.new,
 );
 
-final totalExpenseProvider = Provider<double>((ref) {
-  final expenses = ref.watch(expenseProvider);
+final totalExpenseProvider = Provider.family<double, ExpensePeriod>((
+  ref,
+  period,
+) {
+  final expenses = ref.watch(filteredExpensesProvider(period));
   return expenses.fold(0.0, (sum, expense) => sum + expense.amount);
 });
 
-final topThreeCategoriesProvider = Provider<List<MapEntry<Category, double>>>((
+final topThreeCategoriesProvider =
+    Provider.family<List<MapEntry<Category, double>>, ExpensePeriod>((
+      ref,
+      period,
+    ) {
+      final expenses = ref.watch(filteredExpensesProvider(period));
+
+      final categoryTotals = <Category, double>{
+        for (var category in Category.values) category: 0.0,
+      };
+
+      for (final expense in expenses) {
+        categoryTotals[expense.category] =
+            (categoryTotals[expense.category] ?? 0) + expense.amount;
+      }
+
+      final sortedCategories = categoryTotals.entries.toList();
+
+      sortedCategories.sort((a, b) => b.value.compareTo(a.value));
+
+      return sortedCategories.take(3).toList();
+    });
+
+final filteredExpensesProvider = Provider.family<List<Expense>, ExpensePeriod>((
   ref,
+  period,
 ) {
   final expenses = ref.watch(expenseProvider);
+  return expenses.where((expense) {
+    final now = DateTime.now();
+    final date = expense.date;
 
-  final categoryTotals = <Category, double>{
-    for (var category in Category.values) category: 0.0,
-  };
+    switch (period) {
+      case ExpensePeriod.today:
+        return date.year == now.year &&
+            date.month == now.month &&
+            date.day == now.day;
 
-  for (final expense in expenses) {
-    categoryTotals[expense.category] =
-        (categoryTotals[expense.category] ?? 0) + expense.amount;
-  }
+      case ExpensePeriod.thisWeek:
+        final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
 
-  final sortedCategories = categoryTotals.entries.toList();
+        return date.isAfter(
+          DateTime(
+            startOfWeek.year,
+            startOfWeek.month,
+            startOfWeek.day,
+          ).subtract(const Duration(seconds: 1)),
+        );
 
-  sortedCategories.sort((a, b) => b.value.compareTo(a.value));
+      case ExpensePeriod.thisMonth:
+        return date.year == now.year && date.month == now.month;
 
-  return sortedCategories.take(3).toList();
+      case ExpensePeriod.thisYear:
+        return date.year == now.year;
+
+      case ExpensePeriod.allTime:
+        return true;
+    }
+  }).toList();
 });

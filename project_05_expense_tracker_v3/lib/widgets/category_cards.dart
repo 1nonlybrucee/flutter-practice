@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_05_expense_tracker_v3/models/expense.dart';
+import 'package:project_05_expense_tracker_v3/models/expense_period.dart';
 import 'package:project_05_expense_tracker_v3/providers/expense_provider.dart';
 
 class CategoryCards extends ConsumerWidget {
-  const CategoryCards({super.key});
+  const CategoryCards({super.key, required this.selectedPeriod});
+  final ExpensePeriod selectedPeriod;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Expense> expenses = ref.watch(expenseProvider);
+    final List<Expense> expenses = ref.watch(
+      filteredExpensesProvider(selectedPeriod),
+    );
 
     return GridView.builder(
       padding: const EdgeInsets.all(8),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_05_expense_tracker_v3/models/expense_period.dart';
 import 'package:project_05_expense_tracker_v3/widgets/expense_list.dart';
 import 'package:project_05_expense_tracker_v3/widgets/expense_period_filter.dart';
 import 'package:project_05_expense_tracker_v3/widgets/top_categories.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          const TotalDisplay(),
+          TotalDisplay(selectedPeriod: selectedPeriod),
           const SizedBox(height: 24),
           ExpensePeriodFilter(
             selectedPeriod: selectedPeriod,
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           const SizedBox(height: 16),
-          const TopCategories(),
+          TopCategories(selectedPeriod: selectedPeriod),
           const SizedBox(height: 24),
           Expanded(child: ExpenseList(selectedPeriod: selectedPeriod)),
         ],

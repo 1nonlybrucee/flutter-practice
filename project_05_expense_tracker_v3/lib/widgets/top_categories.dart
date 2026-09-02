@@ -1,13 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:project_05_expense_tracker_v3/models/expense_period.dart';
 import 'package:project_05_expense_tracker_v3/providers/expense_provider.dart';
 
 class TopCategories extends ConsumerWidget {
-  const TopCategories({super.key});
-
+  const TopCategories({super.key, required this.selectedPeriod});
+  final ExpensePeriod selectedPeriod;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final topCategories = ref.watch(topThreeCategoriesProvider);
+    final topCategories = ref.watch(topThreeCategoriesProvider(selectedPeriod));
 
     return Center(
       child: Row(

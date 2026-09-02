@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-enum ExpensePeriod { today, thisWeek, thisMonth, thisYear, allTime }
+import 'package:project_05_expense_tracker_v3/models/expense_period.dart';
 
 class ExpensePeriodFilter extends StatelessWidget {
   final ExpensePeriod selectedPeriod;

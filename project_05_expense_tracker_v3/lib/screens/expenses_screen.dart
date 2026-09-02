@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_05_expense_tracker_v3/models/expense_period.dart';
 import 'package:project_05_expense_tracker_v3/widgets/category_cards.dart';
 import 'package:project_05_expense_tracker_v3/widgets/category_filter.dart';
 import 'package:project_05_expense_tracker_v3/widgets/expense_list.dart';
@@ -37,7 +38,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
               });
             },
           ),
-          SizedBox(height: 180, child: CategoryCards()),
+          SizedBox(
+            height: 180,
+            child: CategoryCards(selectedPeriod: selectedPeriod),
+          ),
           const SizedBox(height: 24),
           CategoryFilter(
             selectedCategory: selectedCategory,
