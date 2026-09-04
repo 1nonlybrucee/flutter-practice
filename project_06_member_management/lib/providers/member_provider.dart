@@ -15,3 +15,7 @@ class MemberNotifier extends Notifier<List<Member>> {
     state = state.where((member) => member.id != idToRemove).toList();
   }
 }
+
+final memberProvider = NotifierProvider<MemberNotifier, List<Member>>(
+  MemberNotifier.new,
+);
