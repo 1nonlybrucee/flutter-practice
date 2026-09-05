@@ -2,8 +2,8 @@ class Member {
   String id;
   String name;
   String phone;
-  DateTime birthDate;
-  DateTime joinedDate;
+  DateTime? birthDate;
+  DateTime? joinedDate;
   bool isActive;
 
   Member({

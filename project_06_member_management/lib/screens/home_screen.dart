@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_06_member_management/providers/member_provider.dart';
+import 'package:project_06_member_management/widgets/add_member_dialog.dart';
 import 'package:project_06_member_management/widgets/member_stat_card.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -43,6 +44,13 @@ class HomeScreen extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(context: context, builder: (context) => AddMemberDialog());
+        },
+        icon: Icon(Icons.add),
+        label: Text("Add Member"),
       ),
     );
   }
